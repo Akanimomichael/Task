@@ -5,6 +5,7 @@ import { RecipientsPage } from './pages/RecipientsPage';
 import { EditorPage } from './pages/EditorPage';
 import { SummaryPage } from './pages/SummaryPage';
 import { SigningPage } from './pages/SigningPage';
+import { PreviewPage } from './pages/Preview';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/editor" element={<EditorPage />} />
           <Route path="/summary" element={<SummaryPage />} />
           <Route path="/signing/:documentId" element={<SigningPage />} />
+          <Route path="/preview/:documentId" element={<PreviewPage />} />
         </Routes>
       </div>
     </Router>

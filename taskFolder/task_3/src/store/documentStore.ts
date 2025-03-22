@@ -28,18 +28,22 @@ export const useDocumentStore = create<DocumentStore>((set) => ({
     })),
   addRecipient: (documentId, recipient) =>
     set((state) => ({
-      documents: state.documents.map((d) => 
+      documents: state.documents.map((d) =>
         d.id === documentId
           ? { ...d, recipients: [...d.recipients, recipient] }
           : d
       ),
-      currentDocument: state.currentDocument?.id === documentId
-        ? { ...state.currentDocument, recipients: [...state.currentDocument.recipients, recipient] }
-        : state.currentDocument
+      currentDocument:
+        state.currentDocument?.id === documentId
+          ? {
+              ...state.currentDocument,
+              recipients: [...state.currentDocument.recipients, recipient],
+            }
+          : state.currentDocument,
     })),
   removeRecipient: (documentId, recipientId) =>
     set((state) => ({
-      documents: state.documents.map((d) => 
+      documents: state.documents.map((d) =>
         d.id === documentId
           ? {
               ...d,
@@ -47,18 +51,33 @@ export const useDocumentStore = create<DocumentStore>((set) => ({
             }
           : d
       ),
-      currentDocument: state.currentDocument?.id === documentId
-        ? { ...state.currentDocument, recipients: state.currentDocument.recipients.filter((r) => r.id !== recipientId) }
-        : state.currentDocument
+      currentDocument:
+        state.currentDocument?.id === documentId
+          ? {
+              ...state.currentDocument,
+              recipients: state.currentDocument.recipients.filter(
+                (r) => r.id !== recipientId
+              ),
+            }
+          : state.currentDocument,
     })),
   addField: (documentId, field) =>
-    set((state) => ({
-      documents: state.documents.map((d) =>
-        d.id === documentId
-          ? { ...d, fields: [...d.fields, field] }
-          : d
-      ),
-    })),
+    set((state) => {
+      const updatedDocuments = state.documents.map((d) =>
+        d.id === documentId ? { ...d, fields: [...d.fields, field] } : d
+      );
+
+      return {
+        documents: updatedDocuments,
+        currentDocument:
+          state.currentDocument?.id === documentId
+            ? {
+                ...state.currentDocument,
+                fields: [...state.currentDocument.fields, field],
+              }
+            : state.currentDocument,
+      };
+    }),
   updateField: (documentId, field) =>
     set((state) => ({
       documents: state.documents.map((d) =>
@@ -66,11 +85,20 @@ export const useDocumentStore = create<DocumentStore>((set) => ({
           ? {
               ...d,
               fields: d.fields.map((f) =>
-                f.id === field.id ? field : f
+                f.id === field.id ? { ...f, value: field.value } : f
               ),
             }
           : d
       ),
+      currentDocument:
+        state.currentDocument?.id === documentId
+          ? {
+              ...state.currentDocument,
+              fields: state.currentDocument.fields.map((f) =>
+                f.id === field.id ? { ...f, value: field.value } : f
+              ),
+            }
+          : state.currentDocument,
     })),
   removeField: (documentId, fieldId) =>
     set((state) => ({

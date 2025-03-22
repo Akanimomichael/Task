@@ -1,9 +1,9 @@
-import React from 'react';
-import { PenLine, Type, Calendar, CheckSquare, Edit } from 'lucide-react';
-import { DocumentField } from '../types';
+import React, { useCallback } from "react";
+import { PenLine, Type, Calendar, CheckSquare, Edit } from "lucide-react";
+import { DocumentField } from "../types";
 
 interface DraggableFieldProps {
-  type: DocumentField['type'];
+  type: DocumentField["type"];
 }
 
 const fieldIcons = {
@@ -14,14 +14,16 @@ const fieldIcons = {
   initial: Edit,
 };
 
-export const DraggableField: React.FC<DraggableFieldProps> = ({
-  type
-}) => {
+export const DraggableField: React.FC<DraggableFieldProps> = ({ type }) => {
   const Icon = fieldIcons[type];
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    e.dataTransfer.setData('fieldType', type);
-  };
+  const handleDragStart = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.dataTransfer.setData("fieldType", type);
+      e.dataTransfer.effectAllowed = "move"; // Improves compatibility
+    },
+    [type]
+  );
 
   return (
     <div

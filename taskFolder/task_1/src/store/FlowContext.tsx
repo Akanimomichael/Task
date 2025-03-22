@@ -1,3 +1,5 @@
+// FIX: Ensured state persists when navigating away and back to the editor.
+
 import React, {
   createContext,
   useContext,
@@ -90,6 +92,10 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
     return savedState ? JSON.parse(savedState) : null;
   };
 
+  const saveState = (state: any) => {
+    localStorage.setItem("flowState", JSON.stringify(state));
+  };
+
   const initialState = loadState() || {
     nodes: [],
     edges: [],
@@ -111,100 +117,74 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
     defaultTablesShown: false,
   };
 
-  const [nodes, setNodes] = useState<Node[]>(initialState.nodes);
-  const [edges, setEdges] = useState<Edge[]>(initialState.edges);
-  const [selectedNode, setSelectedNode] = useState<Node | null>(
-    initialState.selectedNode
-  );
-  const [models, setModels] = useState<Model[]>(initialState.models);
-  const [roles, setRoles] = useState<Role[]>(initialState.roles);
-  const [routes, setRoutes] = useState<Route[]>(initialState.routes);
-  const [settings, setSettings] = useState<Settings>(initialState.settings);
-  const [defaultTablesShown, setDefaultTablesShown] = useState<boolean>(
-    initialState.defaultTablesShown
-  );
+  const [state, setState] = useState(initialState);
 
-  // Save state to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem(
-      "flowState",
-      JSON.stringify({
-        nodes,
-        edges,
-        selectedNode,
-        models,
-        roles,
-        routes,
-        settings,
-        defaultTablesShown,
-      })
-    );
-  }, [
-    nodes,
-    edges,
-    selectedNode,
-    models,
-    roles,
-    routes,
-    settings,
-    defaultTablesShown,
-  ]);
+    setState(loadState() || initialState);
+  }, []);
 
-  const updateNodeData = (nodeId: string, newData: any) => {
-    setNodes((prevNodes) =>
-      prevNodes.map((node) =>
-        node.id === nodeId
-          ? { ...node, data: { ...node.data, ...newData } }
-          : node
-      )
-    );
-  };
+  useEffect(() => {
+    saveState(state);
+  }, [state]);
 
-  const addModel = (model: Model) => setModels((prev) => [...prev, model]);
-  const updateModel = (model: Model) =>
-    setModels((prev) => prev.map((m) => (m.id === model.id ? model : m)));
-  const addRole = (role: Role) => setRoles((prev) => [...prev, role]);
-  const updateRole = (role: Role) =>
-    setRoles((prev) => prev.map((r) => (r.id === role.id ? role : r)));
-  const deleteRole = (roleId: string) =>
-    setRoles((prev) => prev.filter((r) => r.id !== roleId));
-  const addRoute = (route: Route) => setRoutes((prev) => [...prev, route]);
-  const updateRoute = (route: Route) =>
-    setRoutes((prev) => prev.map((r) => (r.id === route.id ? route : r)));
-  const deleteRoute = (routeId: string) =>
-    setRoutes((prev) => prev.filter((r) => r.id !== routeId));
-
-  const updateNode = (nodeId: string, newData: any) => {
-    console.log("Updating node in store:", nodeId, newData);
-    updateNodeData(nodeId, newData);
+  const updateState = (updates: Partial<FlowState>) => {
+    setState((prev) => ({ ...prev, ...updates }));
   };
 
   return (
     <FlowContext.Provider
       value={{
-        nodes,
-        edges,
-        selectedNode,
-        models,
-        roles,
-        routes,
-        settings,
-        defaultTablesShown,
-        setNodes,
-        setEdges,
-        setSelectedNode,
-        updateNodeData,
-        addModel,
-        updateModel,
-        addRole,
-        updateRole,
-        deleteRole,
-        addRoute,
-        updateRoute,
-        deleteRoute,
-        updateSettings: setSettings,
-        setDefaultTablesShown,
-        updateNode,
+        ...state,
+        setNodes: (nodes) =>
+          updateState({
+            nodes: typeof nodes === "function" ? nodes(state.nodes) : nodes,
+          }),
+        setEdges: (edges) =>
+          updateState({
+            edges: typeof edges === "function" ? edges(state.edges) : edges,
+          }),
+        setSelectedNode: (selectedNode) => updateState({ selectedNode }),
+        updateNodeData: (nodeId, newData) => {
+          updateState({
+            nodes: state.nodes.map((node) =>
+              node.id === nodeId
+                ? { ...node, data: { ...node.data, ...newData } }
+                : node
+            ),
+          });
+        },
+        addModel: (model) => updateState({ models: [...state.models, model] }),
+        updateModel: (model) =>
+          updateState({
+            models: state.models.map((m) => (m.id === model.id ? model : m)),
+          }),
+        addRole: (role) => updateState({ roles: [...state.roles, role] }),
+        updateRole: (role) =>
+          updateState({
+            roles: state.roles.map((r) => (r.id === role.id ? role : r)),
+          }),
+        deleteRole: (roleId) =>
+          updateState({ roles: state.roles.filter((r) => r.id !== roleId) }),
+        addRoute: (route) => updateState({ routes: [...state.routes, route] }),
+        updateRoute: (route) =>
+          updateState({
+            routes: state.routes.map((r) => (r.id === route.id ? route : r)),
+          }),
+        deleteRoute: (routeId) =>
+          updateState({ routes: state.routes.filter((r) => r.id !== routeId) }),
+        updateSettings: (settings) => updateState({ settings }),
+        setDefaultTablesShown: (shown) =>
+          updateState({ defaultTablesShown: shown }),
+        updateNode: (nodeId, newData) => {
+          console.log("Updating node in store:", nodeId, newData);
+          updateState({
+            nodes: state.nodes.map((node) =>
+              node.id === nodeId
+                ? { ...node, data: { ...node.data, ...newData } }
+                : node
+            ),
+          });
+        },
       }}
     >
       {children}

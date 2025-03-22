@@ -53,7 +53,7 @@ export function CodeEditor({ value, onChange }: CodeEditorProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         style={{ color: "transparent", textShadow: "0 0 0 black" }}
-        className="w-full h-full pl-[3.8rem] pr-2 pt-4 bg-transparent resize-none focus:outline-none leading-[1.5rem] tracking-normal text-white opacity-1 caret-white"
+        className="w-full h-full pl-[3.99rem] pr-2 pt-4 bg-transparent resize-none focus:outline-none leading-[1.5rem] tracking-normal text-white opacity-1 caret-white"
         spellCheck={false}
       />
     </div>

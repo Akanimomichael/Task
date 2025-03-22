@@ -1,14 +1,14 @@
-import React from 'react';
-import { DraggableField } from './DraggableField';
-import type { DocumentField } from '../types';
+import React from "react";
+import { DraggableField } from "./DraggableField";
+import type { DocumentField } from "../types";
 
 export const EditorSidebar: React.FC = () => {
-  const fieldTypes: DocumentField['type'][] = [
-    'signature',
-    'text',
-    'date',
-    'checkbox',
-    'initial',
+  const fieldTypes: DocumentField["type"][] = [
+    "signature",
+    "text",
+    "date",
+    "checkbox",
+    "initial",
   ];
 
   return (

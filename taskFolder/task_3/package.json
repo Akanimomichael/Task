@@ -10,15 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^3.4.0",
+    "clsx": "^2.1.0",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1", 
-    "react-router-dom": "^6.22.3",
-    "zustand": "^4.5.2",
+    "react-dom": "^18.3.1",
+    "react-draggable": "^4.4.6",
     "react-dropzone": "^14.2.3",
-    "react-pdf": "^7.7.1", 
-    "@react-pdf/renderer": "^3.4.0",
-    "clsx": "^2.1.0"
+    "react-pdf": "^7.7.1",
+    "react-resizable": "^3.0.5",
+    "react-router-dom": "^6.22.3",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
