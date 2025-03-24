@@ -63,7 +63,7 @@ const CustomNode = ({ data }: NodeProps<CustomNodeData>) => {
       </div>
 
       {/* Display Body Fields */}
-      {data?.bodyFields?.length > 0 && (
+      {/* {data?.bodyFields?.length > 0 && (
         <div className="mt-2 text-xs text-gray-700">
           <strong>Body Fields:</strong>
           <ul className="ml-2 list-disc">
@@ -75,9 +75,9 @@ const CustomNode = ({ data }: NodeProps<CustomNodeData>) => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
       {/* Display Query Parameters */}
-      {data?.queryFields?.length > 0 && (
+      {/* {data?.queryFields?.length > 0 && (
         <div className="mt-2 text-xs text-gray-700">
           <strong>Query Params:</strong>
           <ul className="ml-2 list-disc">
@@ -89,7 +89,7 @@ const CustomNode = ({ data }: NodeProps<CustomNodeData>) => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
 
       <Handle
         type="source"

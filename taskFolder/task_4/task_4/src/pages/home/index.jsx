@@ -10,7 +10,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 const Home = () => {
   return (
-    <div className="bg-black min-h-screen p-24">
+    <div className=" min-h-screen p-24  border-2">
       <Navbar />
       <Headers />
       <DndProvider backend={HTML5Backend}>
@@ -19,5 +19,8 @@ const Home = () => {
     </div>
   );
 };
+
+// export default Home;
+
 
 export default Home;

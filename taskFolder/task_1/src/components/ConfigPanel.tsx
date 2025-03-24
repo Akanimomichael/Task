@@ -360,13 +360,13 @@ export function ConfigPanel({ node, onClose, onUpdateNode }: ConfigPanelProps) {
                 <div className="mb-2 p-2 bg-gray-50 rounded text-sm">
                   {node.data.fields.map((field: Field) => (
                     <div key={field.name} className="text-gray-600">
-                      {field.name}: {field.type}
+                      {field.name}
                       {field.validation ? ` (${field.validation})` : ""}
                     </div>
                   ))}
                 </div>
               )}
-              {(node.data.fields || []).map((field: Field, index: number) => (
+              {/* {(node.data.fields || []).map((field: Field, index: number) => (
                 <div key={index} className="flex gap-1 mb-2">
                   <input
                     type="text"
@@ -396,7 +396,7 @@ export function ConfigPanel({ node, onClose, onUpdateNode }: ConfigPanelProps) {
                     <Trash className="w-4 h-4" />
                   </button>
                 </div>
-              ))}
+              ))} */}
               <div className="flex gap-1 mt-2">
                 <input
                   type="text"
@@ -433,12 +433,12 @@ export function ConfigPanel({ node, onClose, onUpdateNode }: ConfigPanelProps) {
                   onClick={() => {
                     if (newField.name.trim()) {
                       const updatedFields = [
-                        ...(node.data.bodyFields || []),
+                        ...(node.data.fields || []), // Ensure we're updating `fields`
                         { ...newField },
                       ];
                       onUpdateNode(node.id, {
                         ...node.data,
-                        bodyFields: updatedFields,
+                        fields: updatedFields, // Update the correct property
                       });
                       setNewField({ name: "", type: "string" });
                     }
@@ -457,13 +457,13 @@ export function ConfigPanel({ node, onClose, onUpdateNode }: ConfigPanelProps) {
                 <div className="mb-2 p-2 bg-gray-50 rounded text-sm">
                   {node.data.queryFields.map((field: Field) => (
                     <div key={field.name} className="text-gray-600">
-                      {field.name}: {field.type}
+                      {field.name}
                       {field.validation ? ` (${field.validation})` : ""}
                     </div>
                   ))}
                 </div>
               )}
-              {(node.data.queryFields || []).map(
+              {/* {(node.data.queryFields || []).map(
                 (field: Field, index: number) => (
                   <div key={index} className="flex gap-1 mb-2">
                     <input
@@ -505,7 +505,7 @@ export function ConfigPanel({ node, onClose, onUpdateNode }: ConfigPanelProps) {
                     </button>
                   </div>
                 )
-              )}
+              )} */}
               <div className="flex gap-1 mt-2">
                 <input
                   type="text"

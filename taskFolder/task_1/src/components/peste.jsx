@@ -373,104 +373,104 @@ export function ConfigPanel({ node, onClose, onUpdateNode }: ConfigPanelProps) {
                       </div>
                     </div>
                     <div className="mb-4">
-                      <label className="block text-sm font-medium mb-1">
-                        Query Parameters
-                      </label>
-                      {node.data.queryFields?.length > 0 && (
-                        <div className="mb-2 p-2 bg-gray-50 rounded text-sm">
-                          {node.data.queryFields.map((field: Field) => (
-                            <div key={field.name} className="text-gray-600">
-                              {field.name}: {field.type}
-                              {field.validation ? ` (${field.validation})` : ""}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      {(node.data.queryFields || []).map(
-                        (field: Field, index: number) => (
-                          <div key={index} className="flex gap-1 mb-2">
-                            <input
-                              type="text"
-                              value={field.name}
-                              onChange={(e) =>
-                                handleArrayChange(
-                                  index,
-                                  "name",
-                                  e.target.value,
-                                  "queryFields"
-                                )
-                              }
-                              className="flex-1 p-2 border rounded text-sm"
-                              placeholder="Field name"
-                            />
-                            <select
-                              value={field.type}
-                              onChange={(e) =>
-                                handleArrayChange(
-                                  index,
-                                  "type",
-                                  e.target.value,
-                                  "queryFields"
-                                )
-                              }
-                              className="w-20 p-2 border rounded text-sm"
-                            >
-                              <option value="string">String</option>
-                              <option value="number">Number</option>
-                              <option value="boolean">Bool</option>
-                              <option value="date">Date</option>
-                            </select>
-                            <button
-                              onClick={() => removeField(index, "queryFields")}
-                              className="p-2 text-red-500 hover:bg-red-50 rounded"
-                            >
-                              <Trash className="w-4 h-4" />
-                            </button>
-                          </div>
-                        )
-                      )}
-                      <div className="flex gap-1 mt-2">
-                        <input
-                          type="text"
-                          value={newQueryField.name}
-                          onChange={(e) =>
-                            setNewQueryField({ ...newQueryField, name: e.target.value })
-                          }
-                          className="flex-1 p-2 border rounded text-sm"
-                          placeholder="New query param"
-                        />
-                        <select
-                          value={newQueryField.type}
-                          onChange={(e) =>
-                            setNewQueryField({ ...newQueryField, type: e.target.value })
-                          }
-                          className="w-20 p-2 border rounded text-sm"
-                        >
-                          <option value="string">String</option>
-                          <option value="number">Number</option>
-                          <option value="boolean">Bool</option>
-                          <option value="date">Date</option>
-                        </select>
-                        <button
-                          onClick={() => {
-                            if (newQueryField.name.trim()) {
-                              const updatedQueryFields = [
-                                ...(node.data.queryFields || []),
-                                { ...newQueryField },
-                              ];
-                              onUpdateNode(node.id, {
-                                ...node.data,
-                                queryFields: updatedQueryFields,
-                              });
-                              setNewQueryField({ name: "", type: "string" });
-                            }
-                          }}
-                          className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
+                                  <label className="block text-sm font-medium mb-1">
+                                    Query Parameters
+                                  </label>
+                                  {node.data.queryFields?.length > 0 && (
+                                    <div className="mb-2 p-2 bg-gray-50 rounded text-sm">
+                                      {node.data.queryFields.map((field: Field) => (
+                                        <div key={field.name} className="text-gray-600">
+                                          {field.name}
+                                          {field.validation ? ` (${field.validation})` : ""}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                  {/* {(node.data.queryFields || []).map(
+                                    (field: Field, index: number) => (
+                                      <div key={index} className="flex gap-1 mb-2">
+                                        <input
+                                          type="text"
+                                          value={field.name}
+                                          onChange={(e) =>
+                                            handleArrayChange(
+                                              index,
+                                              "name",
+                                              e.target.value,
+                                              "queryFields"
+                                            )
+                                          }
+                                          className="flex-1 p-2 border rounded text-sm"
+                                          placeholder="Field name"
+                                        />
+                                        <select
+                                          value={field.type}
+                                          onChange={(e) =>
+                                            handleArrayChange(
+                                              index,
+                                              "type",
+                                              e.target.value,
+                                              "queryFields"
+                                            )
+                                          }
+                                          className="w-20 p-2 border rounded text-sm"
+                                        >
+                                          <option value="string">String</option>
+                                          <option value="number">Number</option>
+                                          <option value="boolean">Bool</option>
+                                          <option value="date">Date</option>
+                                        </select>
+                                        <button
+                                          onClick={() => removeField(index, "queryFields")}
+                                          className="p-2 text-red-500 hover:bg-red-50 rounded"
+                                        >
+                                          <Trash className="w-4 h-4" />
+                                        </button>
+                                      </div>
+                                    )
+                                  )} */}
+                                  <div className="flex gap-1 mt-2">
+                                    <input
+                                      type="text"
+                                      value={newQueryField.name}
+                                      onChange={(e) =>
+                                        setNewQueryField({ ...newQueryField, name: e.target.value })
+                                      }
+                                      className="flex-1 p-2 border rounded text-sm"
+                                      placeholder="New query param"
+                                    />
+                                    <select
+                                      value={newQueryField.type}
+                                      onChange={(e) =>
+                                        setNewQueryField({ ...newQueryField, type: e.target.value })
+                                      }
+                                      className="w-20 p-2 border rounded text-sm"
+                                    >
+                                      <option value="string">String</option>
+                                      <option value="number">Number</option>
+                                      <option value="boolean">Bool</option>
+                                      <option value="date">Date</option>
+                                    </select>
+                                    <button
+                                      onClick={() => {
+                                        if (newQueryField.name.trim()) {
+                                          const updatedQueryFields = [
+                                            ...(node.data.queryFields || []),
+                                            { ...newQueryField },
+                                          ];
+                                          onUpdateNode(node.id, {
+                                            ...node.data,
+                                            queryFields: updatedQueryFields,
+                                          });
+                                          setNewQueryField({ name: "", type: "string" });
+                                        }
+                                      }}
+                                      className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    >
+                                      <Plus className="w-4 h-4" />
+                                    </button>
+                                  </div>
+                                </div>
                   </>
                 );
                     case "db-find":
